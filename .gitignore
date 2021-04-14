@@ -5,7 +5,8 @@
 Manifest.toml
 /docs/Manifest.toml
 
-/docs
+#/docs
+
 # Zip folders
 *.zip
 
