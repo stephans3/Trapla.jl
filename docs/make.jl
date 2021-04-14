@@ -17,8 +17,7 @@ makedocs(
     pages = pages
 )
 
-#=
+
 deploydocs(
     repo = "github.com/stephans3/Trapla.jl.git",
 )
-=#
