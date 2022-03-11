@@ -8,5 +8,15 @@ w = 1.5 # Steepness
 
 y = smoothjump.(tspan, Tf; ω = w); # Planned trajectory
 
-# using Plots
-# plot(tspan, y)
+ygk = smoothjump_quadgk.(tspan, Tf; ω = w)
+
+using Plots
+plot(tspan, y)
+
+
+import ForwardDiff
+fn(t) = smoothjump(t, Tf; ω = w);
+dfn = x -> ForwardDiff.derivative(fn,x)
+d2fn = x -> ForwardDiff.derivative(dfn,x)
+
+d2fn(6)

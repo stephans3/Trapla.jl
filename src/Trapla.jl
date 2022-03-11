@@ -1,7 +1,9 @@
 module Trapla
 
-using QuadGK
+import QuadGK
+export smoothjump_quadgk
 
+import FastGaussQuadrature
 export  smoothjump, pulsebell
 include("gevrey.jl")
 

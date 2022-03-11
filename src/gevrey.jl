@@ -18,9 +18,27 @@ function smoothjump(t :: Real, T:: Real; ω = 2.0 :: Real)
     elseif t >= T
         return 1.0
     else
+        x,w = FastGaussQuadrature.gausslegendre(1000)
+        p1 = t/2;
+        p2 = T/2;
+        f(v) = pulsebell(v, T, ω=ω)
+        numer = p1 * FastGaussQuadrature.dot(w,f.(p1*x .+ p1))
+        denom = p2 * FastGaussQuadrature.dot(w,f.(p2*x .+ p2))
 
-        numer, err1 = quadgk(x-> pulsebell(x, T, ω=ω), 0, t)
-        denom, err2 = quadgk(x-> pulsebell(x, T, ω=ω), 0, T)
+        return numer/denom
+    end
+end
+
+function smoothjump_quadgk(t :: Real, T:: Real; ω = 2.0 :: Real)
+
+    if t <= 0
+        return  0.0
+    elseif t >= T
+        return 1.0
+    else
+
+        numer, err1 = QuadGK.quadgk(x-> pulsebell(x, T, ω=ω), 0, t)
+        denom, err2 = QuadGK.quadgk(x-> pulsebell(x, T, ω=ω), 0, T)
 
         return numer/denom
     end
